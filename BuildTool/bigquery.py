@@ -1,12 +1,16 @@
-import pandas_gbq
+from google.cloud import bigquery
+
 
 def big(table):
-    project_id = 'data-bootcamp-lectures'
 
-    sql = """
+    project_id = 'test-2022-wagon'
+    client = bigquery.Client(project=project_id)
+
+    sql = f"""
     SELECT *
-    FROM `bigquery-public-data.{table}`
+    FROM `test.ratings`
+    LIMIT 3
     """
-    df = pandas_gbq.read_gbq(sql, project_id=project_id)
+    df = client.query(sql)
 
     return df
